@@ -10,27 +10,27 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import axios from 'axios'
 
 import {
-  
+
     useNavigate
-  } from "react-router-dom";
+} from "react-router-dom";
 
 
 const Sign = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const[error,setError]=useState('')
+    const [error, setError] = useState('')
     const navigate = useNavigate()
 
 
     const login = () => {
         axios.get('https://parseapi.back4app.com/login', {
 
-      headers: {
-                "X-Parse-Application-Id":'f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y',
+            headers: {
+                "X-Parse-Application-Id": 'f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y',
 
-                "X-Parse-REST-API-Key":'ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg',
+                "X-Parse-REST-API-Key": 'ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg',
 
-                "X-Parse-Revocable-Session":'1',
+                "X-Parse-Revocable-Session": '1',
 
             },
             params: {
@@ -42,25 +42,25 @@ const Sign = () => {
         ).then((response) => {
             const token = response.sessionToken;
             localStorage.setItem('Token', token)
-            navigate('./Handeling')
-         
+            navigate('/Poll')
+
         }).catch((error) => {
-setError("your username or pass are not correct ")
+            setError("your username or pass are not correct ")
         })
-    
+
     }
 
-       
-    
-  
-    
+
+
+
+
 
 
     return (
 
         <div>
             <div className='center '> <HeaderBack> </HeaderBack>
-                <div> <p className='p-color'>Sign in please!</p></div>
+                <div> <p className='p-color'>Login please!</p></div>
                 <div className='box'>
                     <div className='center margin-top'>
                         <Box
@@ -70,7 +70,7 @@ setError("your username or pass are not correct ")
                             }}
                         >
 
-                            <span>please Enter your Username: <br></br> </span> <TextField value={username} onChange={(e) => setUsername(e.target.value)} id="demo-helper-text-misaligned-no-helper" label="userName" />
+                            <TextField style={{ width: '400px' }} value={username} onChange={(e) => setUsername(e.target.value)} id="demo-helper-text-misaligned-no-helper" label="Username" />
                         </Box>
                     </div>    <div className='center'>
                         <Box sx={{
@@ -79,7 +79,7 @@ setError("your username or pass are not correct ")
                             '& > :not(style)': { m: 1 },
                         }}
                         >
-                            <span>please Enter your PassWord:    </span> <TextField value={password} onChange={(e) => setPassword(e.target.value)} id="outlined-password-input"
+                            <TextField style={{ width: '400px' }} value={password} onChange={(e) => setPassword(e.target.value)} id="outlined-password-input"
                                 label="Password"
                                 type="password"
                                 autoComplete="current-password"
@@ -87,11 +87,11 @@ setError("your username or pass are not correct ")
                         </Box>
 
                     </div>
-                    <div  className='center' >
-                        <Button onClick={login} style={{ width: '300px', marginTop: '40px', color: 'black', backgroundColor: 'grey' }} variant="contained" disableElevation>
-                            Log in
+                    <div className='center' >
+                        <Button onClick={login} style={{ width: '400px', marginTop: '40px', color: 'black', backgroundColor: 'grey' }} variant="contained" disableElevation>
+                            Login
                         </Button>
-                        <p style={{color:'red'}}>{error}</p>
+                        <p style={{ color: 'red' }}>{error}</p>
                     </div> </div>
             </div>
             <footer>

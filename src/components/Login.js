@@ -9,19 +9,28 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import axios from 'axios'
 
+import {
+  
+    useNavigate
+  } from "react-router-dom";
+
+
 const Sign = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const[error,setError]=useState('')
+    const navigate = useNavigate()
+
 
     const login = () => {
         axios.get('https://parseapi.back4app.com/login', {
 
-            Headers: {
-                " X-Parse-Application-Id": 'f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y',
+      headers: {
+                "X-Parse-Application-Id":'f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y',
 
-                "X-Parse-REST-API-Key": 'ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg',
+                "X-Parse-REST-API-Key":'ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg',
 
-                " X-Parse-Revocable-Session": '1',
+                "X-Parse-Revocable-Session":'1',
 
             },
             params: {
@@ -33,14 +42,18 @@ const Sign = () => {
         ).then((response) => {
             const token = response.sessionToken;
             localStorage.setItem('Token', token)
-        }).catch(() => {
-console.log("we have error")
+            navigate('./Handeling')
+         
+        }).catch((error) => {
+setError("your username or pass are not correct ")
         })
+    
     }
 
-
-
-
+       
+    
+  
+    
 
 
     return (
@@ -74,10 +87,11 @@ console.log("we have error")
                         </Box>
 
                     </div>
-                    <div className='center' >
+                    <div  className='center' >
                         <Button onClick={login} style={{ width: '300px', marginTop: '40px', color: 'black', backgroundColor: 'grey' }} variant="contained" disableElevation>
-                            Sign in
+                            Log in
                         </Button>
+                        <p style={{color:'red'}}>{error}</p>
                     </div> </div>
             </div>
             <footer>

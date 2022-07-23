@@ -1,6 +1,6 @@
 import React from 'react'
 import HeaderSign from './HeaderSign';
-import '../Sign.css'
+import '../Login.css'
 import img1 from './landing1.jpg'
 import img2 from './landing2.jpg'
 import img3 from './landing3.jpg'
@@ -10,10 +10,11 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 
 const Landing = () => {
     return (
+  
         <div>
-            <HeaderSign />
+            <HeaderSign  />
             <div className='center'>
-                <span style={{ color: 'white', paddingTop: '50px' }} className='center'>Welcome to our site!</span>
+                <span style={{ color: 'white', paddingTop: '40px' }} className='center'>Welcome to our site!</span>
                 <div className='big-box'>
                     <div className='row'>
                         <div className='text first-text'><span className='bold'>Create your desired survey!</span>

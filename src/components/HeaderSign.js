@@ -1,12 +1,17 @@
 import React from 'react'
-import '../Sign.css'
+import '../Login.css'
 import image from '../logo.png'
 import Button from '@mui/material/Button';
 
+import {
+
+    Link
+  } from "react-router-dom";
 
 const HeaderSign = () => {
 
     return (
+   
 
         <div className='header-design'>
 
@@ -15,13 +20,13 @@ const HeaderSign = () => {
             </img>
             <div className='header-button'>
             <Button style={{ width: '100px', color: 'black', backgroundColor: 'grey' }} variant="contained" disableElevation>
-                        Sign in
+            <Link style={{textDecoration:'none',color:'black'}} to="/Login">Login</Link>
                     </Button>
             
             </div>
-
+     
         </div>
-
+       
     )
 }
 

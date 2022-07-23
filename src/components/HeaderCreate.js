@@ -1,8 +1,12 @@
 import React from 'react'
-import '../Sign.css'
+import '../Login.css'
 import image from '../logo.png'
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import {
+ Link
+    
+  } from "react-router-dom";
 
 const HeaderCreate = () => {
 
@@ -16,7 +20,7 @@ const HeaderCreate = () => {
             <div className='header-button'>
             
             <Stack direction="row" spacing={2}>
-      <Button style={{backgroundColor:'grey', color:'black'}} variant="contained">create</Button>
+      <Button  style={{backgroundColor:'grey', color:'black'}} variant="contained"><Link  to="/CreatePoll">Create</Link></Button>
               </Stack>
             </div>
 

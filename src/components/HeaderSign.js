@@ -6,12 +6,12 @@ import Button from '@mui/material/Button';
 import {
 
     Link
-  } from "react-router-dom";
+} from "react-router-dom";
 
 const HeaderSign = () => {
 
     return (
-   
+
 
         <div className='header-design'>
 
@@ -19,14 +19,14 @@ const HeaderSign = () => {
 
             </img>
             <div className='header-button'>
-            <Button style={{ width: '100px', color: 'black', backgroundColor: 'grey' }} variant="contained" disableElevation>
-            <Link style={{textDecoration:'none',color:'black'}} to="/Login">Login</Link>
-                    </Button>
-            
+                <Button style={{ width: '100px', color: 'black', backgroundColor: 'grey' }} variant="contained" disableElevation>
+                    <Link style={{ textDecoration: 'none', color: 'black' }} to="/Login">Login</Link>
+                </Button>
+
             </div>
-     
+
         </div>
-       
+
     )
 }
 

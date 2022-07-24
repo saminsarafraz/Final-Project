@@ -7,7 +7,7 @@ body {
     width: 900px;
 
     background-color: lightgrey;
- 
+
     display: flex;
     flex-direction: column;
     border-radius: 7px;
@@ -15,7 +15,8 @@ body {
 
 
 }
-.row{
+
+.row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -46,43 +47,48 @@ body {
 
 
 }
-.margin-buttom{
+
+.margin-buttom {
     margin-bottom: 50px;
 }
 
-.footer{
+.footer {
     width: 100%;
     background-color: lightgray;
     margin-top: 90px;
     display: flex;
     flex-direction: row;
- 
-   
-  
-}
-.leftpart-footer{
-    width: 40%;
-   padding: 10px;
-   display: flex;
-   flex-direction: column;
- 
+
+
 
 }
-.bold{
+
+.leftpart-footer {
+    width: 40%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+.bold {
     font-weight: bold;
 }
 
-.rightpart-footer{
+.rightpart-footer {
     width: 40%;
     padding: 10px;
     display: flex;
     flex-direction: column;
 }
-.icons{
+
+.icons {
     display: flex;
     flex-direction: row;
-    
+
 }
+
 .p-color {
     color: white;
     margin-top: 10px;
@@ -96,20 +102,20 @@ body {
     align-items: center;
     flex-direction: column;
 
-  
+
 
 }
 
 .box {
     width: 700px;
-   height: auto;
+    height: auto;
     background-color: lightgrey;
     border: 1px solid white;
     border-radius: 5px;
     border: 1px solid white;
     border-radius: 5px;
     border-radius: 7px;
-   
+
 
 
 
@@ -120,7 +126,7 @@ body {
     height: 50px;
     background-color: lightgrey;
     border-radius: 7px;
- 
+
 }
 
 .logo-design {
@@ -143,27 +149,30 @@ body {
 
 
 @media only screen and (max-width: 500px) {
-   .row{display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-   
-  
-   }
-   .text{
-    border: 1px solid black;
-    margin-left: 200px;
-   }
-   .image{
-   margin-left: 250px;
-   }
-   .footer{
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-left: 115px;
-   }
+    .row {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+
     }
-  
+
+    .text {
+        border: 1px solid black;
+        margin-left: 200px;
+    }
+
+    .image {
+        margin-left: 250px;
+    }
+
+    .footer {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: 115px;
+    }
+}

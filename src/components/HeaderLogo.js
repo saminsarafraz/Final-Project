@@ -12,7 +12,7 @@ const HeaderLogo = () => {
             <img className='logo-design' src={image} alt='logo'>
 
             </img>
-     
+
 
         </div>
 

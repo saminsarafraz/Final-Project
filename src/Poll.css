@@ -1,20 +1,22 @@
-.big-box{
+.big-box {
     width: 900px;
     background-color: lightgray;
     margin-top: 40px;
 
 }
+
 .center {
 
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
- 
-  
+
+
 
 }
-.Link-box{
+
+.Link-box {
     width: 600px;
     height: 200px;
     background-color: lightgrey;

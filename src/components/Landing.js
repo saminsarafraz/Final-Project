@@ -10,9 +10,9 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 
 const Landing = () => {
     return (
-  
+
         <div>
-            <HeaderSign  />
+            <HeaderSign />
             <div className='center'>
                 <span style={{ color: 'white', paddingTop: '40px' }} className='center'>Welcome to our site!</span>
                 <div className='big-box'>

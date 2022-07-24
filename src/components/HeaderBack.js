@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import {
 
     Link
-  } from "react-router-dom";
+} from "react-router-dom";
 
 const HeaderBack = () => {
 
@@ -18,15 +18,15 @@ const HeaderBack = () => {
 
             </img>
             <div className='header-button'>
-            
-            <Stack direction="row" spacing={2}>
-      <Button style={{backgroundColor:'grey', color:'black'}} variant="contained"><Link style={{textDecoration:'none', color:'black'}}  to="/Landing">Back</Link></Button>
-              </Stack>
+
+                <Stack direction="row" spacing={2}>
+                    <Button style={{ backgroundColor: 'grey', color: 'black' }} variant="contained"><Link style={{ textDecoration: 'none', color: 'black' }} to="/">Back</Link></Button>
+                </Stack>
             </div>
 
         </div>
 
-    ) 
+    )
 }
 
 

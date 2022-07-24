@@ -9,22 +9,22 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  
-} from "react-router-dom";
-const App=()=>{
-  return(<Router>
 
-<Routes>
-        <Route path="/landing" element={<Landing />} >
-        </Route>
-        <Route path="/Login" element={<Login />}   >
-        </Route>
-        <Route path="/Poll" element={<Poll />}   >
-        </Route>
-        
-        <Route path="/CreatePoll" element={<CreatePoll />}   >
-        </Route>
-      </Routes>
+} from "react-router-dom";
+const App = () => {
+  return (<Router>
+
+    <Routes>
+      <Route path="" element={<Landing />} >
+      </Route>
+      <Route path="/Login" element={<Login />}   >
+      </Route>
+      <Route path="/Poll" element={<Poll />}   >
+      </Route>
+
+      <Route path="/CreatePoll" element={<CreatePoll />}   >
+      </Route>
+    </Routes>
 
 
   </Router>)

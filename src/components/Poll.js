@@ -15,10 +15,12 @@ const Poll = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    const token = localStorage.getItem("Token");
     const fetchData = async () => {
       try {
         const { data: response } = await axios.get(
-          "https://parseapi.back4app.com/poll",
+          "https://parseapi.back4app.com/classes/poll",
+
           {
             Headers: {
               "X-Parse-Application-Id":
@@ -26,6 +28,7 @@ const Poll = () => {
 
               "X-Parse-REST-API-Key":
                 "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
+              "X-Parse-Session-Token": token,
             },
           }
         );
@@ -40,6 +43,7 @@ const Poll = () => {
   return (
     <div className="center">
       <HeaderCreate />
+
       <span style={{ color: "white", marginTop: "30px" }}>
         Build your poll!
       </span>
@@ -66,7 +70,7 @@ const Poll = () => {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.name}
+                    {row.id}
                   </TableCell>
                   <TableCell align="right">{row.title}</TableCell>
                   <TableCell align="right">{row.link}</TableCell>

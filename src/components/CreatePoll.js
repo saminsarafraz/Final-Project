@@ -18,7 +18,13 @@ const CreatePoll = () => {
 
     axios
       .post(
-        "https://parseapi.back4app.com/poll",
+        "https://parseapi.back4app.com/classes/poll",
+
+        {
+          title: title,
+          des: description,
+          option: option,
+        },
         {
           headers: {
             "X-Parse-Application-Id":
@@ -29,13 +35,6 @@ const CreatePoll = () => {
             "Content-Type": "application/json",
 
             "X-Parse-Session-Token": token,
-          },
-        },
-        {
-          data: {
-            title: title,
-            des: description,
-            option: option,
           },
         }
       )

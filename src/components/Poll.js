@@ -11,8 +11,11 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
+import { useNavigate } from "react-router-dom";
+
 const Poll = () => {
   const [data, setData] = useState([]);
+  const [Delete, setDelete] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("Token");
@@ -40,6 +43,32 @@ const Poll = () => {
     fetchData();
   }, []);
 
+  const deletePoll = (objectId) => {
+    const token = localStorage.getItem("Token");
+    axios
+      .delete("https://parseapi.back4app.com/classes/poll/objectId", {
+        Headers: {
+          "X-Parse-Application-Id": "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
+
+          "X-Parse-REST-API-Key": "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
+          "X-Parse-Session-Token": token,
+        },
+      })
+      .then((response) => {
+        const rows = Delete.Deletefilter((row) => row.objectId === objectId);
+        setDelete(rows);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = "/Edit";
+    navigate(path);
+  };
+
   return (
     <div className="center">
       <HeaderCreate />
@@ -56,10 +85,12 @@ const Poll = () => {
                 <TableCell align="right">Link</TableCell>
                 <TableCell align="right">Num of Participant</TableCell>
                 <TableCell align="right">
-                  <DeleteForeverIcon></DeleteForeverIcon>
+                  <DeleteForeverIcon
+                    onClick={(e) => deletePoll()}
+                  ></DeleteForeverIcon>
                 </TableCell>
                 <TableCell align="right">
-                  <EditIcon />
+                  <EditIcon onClick={routeChange} />
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -72,7 +103,7 @@ const Poll = () => {
                   <TableCell component="th" scope="row">
                     {row.id}
                   </TableCell>
-                  <TableCell align="right">{row.title}</TableCell>
+                  <TableCell align="right">{data.title}</TableCell>
                   <TableCell align="right">{row.link}</TableCell>
                   <TableCell align="right">{row.Num}</TableCell>
                 </TableRow>
@@ -84,4 +115,5 @@ const Poll = () => {
     </div>
   );
 };
+
 export default Poll;

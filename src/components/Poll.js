@@ -25,7 +25,7 @@ const Poll = () => {
           "https://parseapi.back4app.com/classes/poll",
 
           {
-            Headers: {
+            headers: {
               "X-Parse-Application-Id":
                 "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
 
@@ -35,7 +35,8 @@ const Poll = () => {
             },
           }
         );
-        setData(response.data);
+        setData(response.data.results);
+        console.log(response.data.results);
       } catch (error) {
         console.error(error.message);
       }
@@ -47,7 +48,7 @@ const Poll = () => {
     const token = localStorage.getItem("Token");
     axios
       .delete("https://parseapi.back4app.com/classes/poll/objectId", {
-        Headers: {
+        headers: {
           "X-Parse-Application-Id": "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
 
           "X-Parse-REST-API-Key": "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
@@ -55,9 +56,11 @@ const Poll = () => {
         },
       })
       .then((response) => {
-        const rows = Delete.Deletefilter((row) => row.objectId === objectId);
+        const rows = Delete.Deletefilter(
+          (row) => row.results.objectId === objectId
+        );
         setDelete(rows);
-        console.log(response.data);
+        console.log(response.data.results);
       })
       .catch((error) => {
         console.log(error.message);
@@ -97,15 +100,15 @@ const Poll = () => {
             <TableBody>
               {data.map((row) => (
                 <TableRow
-                  key={row.name}
+                  key={row.objectId}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.id}
+                    {row.orderId}
                   </TableCell>
-                  <TableCell align="right">{data.title}</TableCell>
-                  <TableCell align="right">{row.link}</TableCell>
-                  <TableCell align="right">{row.Num}</TableCell>
+                  <TableCell align="right">{row.title}</TableCell>
+                  <TableCell align="right">{row.des}</TableCell>
+                  <TableCell align="right">{row.option}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

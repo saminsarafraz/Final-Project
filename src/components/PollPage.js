@@ -1,11 +1,7 @@
+import React from "react";
 
-import React from 'react'
+const PollPage = () => {
+  return <div></div>;
+};
 
-const PollPage=()=>{
-
-
-
-}
-
-
-export dafault PollPage;
+export default PollPage;

@@ -44,7 +44,7 @@ const Poll = () => {
     fetchData();
   }, []);
 
-  const deletePoll = (objectId) => {
+  const deletePoll = (objectId, e) => {
     const token = localStorage.getItem("Token");
     axios
       .delete(`https://parseapi.back4app.com/classes/poll/${objectId}`, {
@@ -99,7 +99,9 @@ const Poll = () => {
                   <TableCell align="right">{row.des}</TableCell>
                   <TableCell align="right">{row.createdAt}</TableCell>
                   <TableCell align="right">
-                    <DeleteForeverIcon onClick={() => deletePoll(objectId)} />
+                    <DeleteForeverIcon
+                      onClick={(e) => deletePoll(row.objectId)}
+                    />
                   </TableCell>
                   <TableCell align="right">
                     <EditIcon onClick={() => routeChange(objectId)} />

@@ -12,7 +12,7 @@ const CreatePoll = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [option, setOption] = useState("");
-  const [createOption, setCreateOption] = useState("");
+  const [createOption, setCreateOption] = useState([]);
 
   const Create = () => {
     const token = localStorage.getItem("Token");
@@ -66,16 +66,16 @@ const CreatePoll = () => {
       <span style={{ color: "white", marginTop: "30px" }}>Create poll !</span>
       <div className="big-box ">
         <Box
-          style={{ marginLeft: "150px", marginTop: "30px" }}
+          style={{ marginLeft: "190px", marginTop: "30px" }}
           sx={{
             display: "flex",
             alignItems: "center",
             "& > :not(style)": { m: 1 },
           }}
         >
-          <span>
+          {/* <span>
             Title: <br></br>{" "}
-          </span>{" "}
+          </span>{" "} */}
           <TextField
             onChange={(e) => setTitle(e.target.value)}
             style={{ width: "500px" }}
@@ -84,8 +84,8 @@ const CreatePoll = () => {
           />
         </Box>
 
-        <Box style={{ marginLeft: "120px", marginTop: "30px" }}>
-          <span>Description: </span>{" "}
+        <Box style={{ marginLeft: "196px", marginTop: "30px" }}>
+          {/* <span>Description: </span>{" "} */}
           <TextField
             onChange={(e) => setDescription(e.target.value)}
             style={{ width: "500px" }}
@@ -96,16 +96,29 @@ const CreatePoll = () => {
           />
         </Box>
         <Box
-          style={{ marginLeft: "120px", marginTop: "30px" }}
+          style={{ marginLeft: "190px", marginTop: "30px" }}
           sx={{
             display: "flex",
             alignItems: "center",
             "& > :not(style)": { m: 1 },
           }}
         >
-          <span>
-            Option: <br></br>{" "}
-          </span>{" "}
+          <TextField
+            onChange={(e) => setOption(e.target.value)}
+            style={{ width: "500px" }}
+            id="demo-helper-text-misaligned-no-helper"
+            label="option"
+          />
+          <DeleteForeverIcon onClick={DeletInput} />
+        </Box>
+        <Box
+          style={{ marginLeft: "190px", marginTop: "30px" }}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            "& > :not(style)": { m: 1 },
+          }}
+        >
           <TextField
             onChange={(e) => setOption(e.target.value)}
             style={{ width: "500px" }}
@@ -116,16 +129,13 @@ const CreatePoll = () => {
         </Box>
         {createOption.map((index) => (
           <Box
-            style={{ marginLeft: "120px", marginTop: "30px" }}
+            style={{ marginLeft: "190px", marginTop: "30px" }}
             sx={{
               display: "flex",
               alignItems: "center",
               "& > :not(style)": { m: 1 },
             }}
           >
-            <span>
-              Option: <br></br>{" "}
-            </span>{" "}
             <TextField
               onChange={(e) => setOption(e.target.value)}
               style={{ width: "500px" }}
@@ -138,7 +148,7 @@ const CreatePoll = () => {
 
         <AddCircleIcon
           onClick={newInput}
-          style={{ marginLeft: "150px", marginTop: "20px" }}
+          style={{ marginLeft: "190px", marginTop: "20px" }}
         />
 
         <div className="center">

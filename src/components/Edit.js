@@ -65,16 +65,13 @@ const Edit = () => {
       <div className="big-box ">
         {/* {data.map((row, objectId) => ( */}
         <Box
-          style={{ marginLeft: "150px", marginTop: "30px" }}
+          style={{ marginLeft: "190px", marginTop: "30px" }}
           sx={{
             display: "flex",
             alignItems: "center",
             "& > :not(style)": { m: 1 },
           }}
         >
-          <span>
-            Title: <br></br>{" "}
-          </span>{" "}
           <TextField
             value={title}
             style={{ width: "500px" }}
@@ -83,8 +80,7 @@ const Edit = () => {
           />
         </Box>
         {/* ))} */}
-        <Box style={{ marginLeft: "120px", marginTop: "30px" }}>
-          <span>Description: </span>{" "}
+        <Box style={{ marginLeft: "196px", marginTop: "30px" }}>
           <TextField
             style={{ width: "500px" }}
             id="outlined-multiline-static"
@@ -98,7 +94,6 @@ const Edit = () => {
           <Button
             onClick={editData}
             style={{
-              marginLeft: "20px",
               width: "500px",
               marginTop: "40px",
               color: "black",

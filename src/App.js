@@ -17,7 +17,7 @@ const App = () => {
 
         <Route path="/CreatePoll" element={<CreatePoll />}></Route>
 
-        <Route path="/Edit" element={<Edit />}></Route>
+        <Route path="/Edit/:objectId" element={<Edit />}></Route>
 
         <Route path="/PollPage" element={<PollPage />}></Route>
       </Routes>

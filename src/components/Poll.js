@@ -35,8 +35,8 @@ const Poll = () => {
             },
           }
         );
-        setData(response.data.results);
-        console.log(response.data.results);
+        setData(response.results);
+        console.log(response.results);
       } catch (error) {
         console.error(error.message);
       }
@@ -47,28 +47,28 @@ const Poll = () => {
   const deletePoll = (objectId) => {
     const token = localStorage.getItem("Token");
     axios
-      .delete("https://parseapi.back4app.com/classes/poll/objectId", {
+      .delete(`https://parseapi.back4app.com/classes/poll/${objectId}`, {
         headers: {
           "X-Parse-Application-Id": "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
 
           "X-Parse-REST-API-Key": "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
           "X-Parse-Session-Token": token,
+          "content-type": "application/json",
         },
       })
       .then((response) => {
-        const rows = Delete.Deletefilter(
-          (row) => row.results.objectId === objectId
-        );
-        setDelete(rows);
-        console.log(response.data.results);
+        const del = Delete.filter((row) => objectId !== row.objectId);
+        setDelete(del);
+
+        console.log(response.results);
       })
       .catch((error) => {
         console.log(error.message);
       });
   };
   let navigate = useNavigate();
-  const routeChange = () => {
-    let path = "/Edit";
+  const routeChange = (objectId) => {
+    let path = `/Edit/${objectId}`;
     navigate(path);
   };
 
@@ -84,31 +84,26 @@ const Poll = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Title</TableCell>
-                <TableCell align="right">Link</TableCell>
-                <TableCell align="right">Num of Participant</TableCell>
-                <TableCell align="right">
-                  <DeleteForeverIcon
-                    onClick={(e) => deletePoll()}
-                  ></DeleteForeverIcon>
-                </TableCell>
-                <TableCell align="right">
-                  <EditIcon onClick={routeChange} />
-                </TableCell>
+                <TableCell align="left">Title</TableCell>
+                <TableCell align="center">Link</TableCell>
+                <TableCell align="right">Num Of Participant</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((row) => (
+              {data.map((row, objectId) => (
                 <TableRow
-                  key={row.objectId}
+                  key={objectId}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
-                    {row.orderId}
-                  </TableCell>
-                  <TableCell align="right">{row.title}</TableCell>
+                  <TableCell align="left">{row.title}</TableCell>
                   <TableCell align="right">{row.des}</TableCell>
-                  <TableCell align="right">{row.option}</TableCell>
+                  <TableCell align="right">{row.createdAt}</TableCell>
+                  <TableCell align="right">
+                    <DeleteForeverIcon onClick={() => deletePoll(objectId)} />
+                  </TableCell>
+                  <TableCell align="right">
+                    <EditIcon onClick={() => routeChange(objectId)} />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

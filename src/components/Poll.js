@@ -56,16 +56,19 @@ const Poll = () => {
           "content-type": "application/json",
         },
       })
+
       .then((response) => {
         const del = Delete.filter((row) => objectId !== row.objectId);
         setDelete(del);
-
+        window.location.reload(false);
         console.log(response.results);
       })
+
       .catch((error) => {
         console.log(error.message);
       });
   };
+
   let navigate = useNavigate();
   const routeChange = (objectId) => {
     let path = `/Edit/${objectId}`;
@@ -97,7 +100,7 @@ const Poll = () => {
                 >
                   <TableCell align="left">{row.title}</TableCell>
                   <TableCell align="right">{row.des}</TableCell>
-                  <TableCell align="right">{row.createdAt}</TableCell>
+                  <TableCell align="right">{row.link}</TableCell>
                   <TableCell align="right">
                     <DeleteForeverIcon
                       onClick={(e) => deletePoll(row.objectId)}

@@ -5,7 +5,7 @@ import Poll from "./components/Poll";
 import CreatePoll from "./components/CreatePoll";
 import PollPage from "./components/PollPage";
 import Edit from "./components/Edit";
-// import Link from './components/Link';
+import Link from "./components/Link";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 const App = () => {
   return (
@@ -20,6 +20,7 @@ const App = () => {
         <Route path="/Edit/:objectId" element={<Edit />}></Route>
 
         <Route path="/PollPage" element={<PollPage />}></Route>
+        <Route path="/Link/:objectId" element={<Link />}></Route>
       </Routes>
     </Router>
   );

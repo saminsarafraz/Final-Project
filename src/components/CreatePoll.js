@@ -11,21 +11,23 @@ import Button from "@mui/material/Button";
 const CreatePoll = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [option, setOption] = useState("");
+  // const [option, setOption] = useState("");
   const [createOption, setCreateOption] = useState([]);
+  const [link, setLink] = useState("");
+  const createLink = (objectId) => {
+    return `http://localhost:3000/Poll${objectId}`;
+  };
 
-  const Create = () => {
-    const token = localStorage.getItem("Token");
-
-    axios
-
-      .post(
+  const token = localStorage.getItem("Token");
+  const Create = async () => {
+    try {
+      const { data: response } = await axios.post(
         "https://parseapi.back4app.com/classes/poll",
 
         {
           title: title,
           des: description,
-          option: option,
+          link: link,
         },
         {
           headers: {
@@ -39,12 +41,17 @@ const CreatePoll = () => {
             "X-Parse-Session-Token": token,
           },
         }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => console.log(err.message));
+      );
+
+      console.log(response);
+      const id = response.data.objectId;
+      const uniqueLink = createLink(id);
+      setLink(uniqueLink);
+    } catch (err) {
+      console.log(err.message);
+    }
   };
+
   const newInput = () => {
     setCreateOption([
       ...createOption,
@@ -104,7 +111,7 @@ const CreatePoll = () => {
           }}
         >
           <TextField
-            onChange={(e) => setOption(e.target.value)}
+            // onChange={(e) => setOption(e.target.value)}
             style={{ width: "500px" }}
             id="demo-helper-text-misaligned-no-helper"
             label="option"
@@ -120,7 +127,7 @@ const CreatePoll = () => {
           }}
         >
           <TextField
-            onChange={(e) => setOption(e.target.value)}
+            // onChange={(e) => setOption(e.target.value)}
             style={{ width: "500px" }}
             id="demo-helper-text-misaligned-no-helper"
             label="option"
@@ -137,7 +144,7 @@ const CreatePoll = () => {
             }}
           >
             <TextField
-              onChange={(e) => setOption(e.target.value)}
+              // onChange={(e) => setOption(e.target.value)}
               style={{ width: "500px" }}
               id="demo-helper-text-misaligned-no-helper"
               label="option"
@@ -153,7 +160,7 @@ const CreatePoll = () => {
 
         <div className="center">
           <Button
-            onClick={Create}
+            onClick={() => Create()}
             style={{
               width: "500px",
               marginTop: "40px",

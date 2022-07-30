@@ -15,7 +15,12 @@ const HeaderCreate = () => {
             style={{ backgroundColor: "grey", color: "black" }}
             variant="contained"
           >
-            <Link to="/CreatePoll">Create</Link>
+            <Link
+              style={{ textDecoration: "none", color: "black" }}
+              to="/CreatePoll"
+            >
+              Create
+            </Link>
           </Button>
         </Stack>
       </div>

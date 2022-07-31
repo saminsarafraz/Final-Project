@@ -8,6 +8,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import axios from "axios";
+import { BASE_URL } from "./constants";
 
 import { useNavigate } from "react-router-dom";
 
@@ -18,28 +19,34 @@ const Sign = () => {
   const navigate = useNavigate();
 
   const login = () => {
-    axios
-      .get("https://parseapi.back4app.com/login", {
-        headers: {
-          "X-Parse-Application-Id": "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
+    if (username.length === 0 || password.length === 0) {
+      setError(true);
+    } else {
+      axios
+        .get(`https://${BASE_URL}/login`, {
+          headers: {
+            "X-Parse-Application-Id":
+              "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
 
-          "X-Parse-REST-API-Key": "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
+            "X-Parse-REST-API-Key": "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
 
-          "X-Parse-Revocable-Session": "1",
-        },
-        params: {
-          username: username,
-          password: password,
-        },
-      })
-      .then((response) => {
-        const token = response.data.sessionToken;
-        localStorage.setItem("Token", token);
-        navigate("/Poll");
-      })
-      .catch((error) => {
-        setError("your username or pass are not correct ");
-      });
+            "X-Parse-Revocable-Session": "1",
+          },
+          params: {
+            username: username,
+            password: password,
+          },
+        })
+
+        .then((response) => {
+          const token = response.data.sessionToken;
+          localStorage.setItem("Token", token);
+          navigate("/Poll");
+        })
+        .catch((error) => {
+          setError("your username or pass are not correct ");
+        });
+    }
   };
 
   return (
@@ -68,6 +75,11 @@ const Sign = () => {
                 label="Username"
               />
             </Box>
+            {error && username.length <= 0 ? (
+              <span style={{ color: "red" }}>userName cant be emty</span>
+            ) : (
+              ""
+            )}
           </div>{" "}
           <div className="center">
             <Box
@@ -87,6 +99,11 @@ const Sign = () => {
                 autoComplete="current-password"
               />
             </Box>
+            {error && password.length <= 0 ? (
+              <span style={{ color: "red" }}>password cant be emty</span>
+            ) : (
+              ""
+            )}
           </div>
           <div className="center">
             <Button

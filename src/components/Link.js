@@ -3,19 +3,20 @@ import axios from "axios";
 import "../Poll.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-
+import { useParams } from "react-router-dom";
 import HeaderBack from "./HeaderBack";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { BASE_URL } from "./constants";
 
 const Link = () => {
   const [data, setData] = useState([]);
-
+  let { objectId } = useParams();
   useEffect(() => {
     const token = localStorage.getItem("Token");
-    const fetchData = async () => {
+    const fetchData = async (objectId) => {
       try {
         const { data: response } = await axios.get(
-          "https://parseapi.back4app.com/classes/poll",
+          `https://${BASE_URL}/classes/poll/${objectId}`,
 
           {
             headers: {
@@ -28,14 +29,14 @@ const Link = () => {
             },
           }
         );
-        setData(response.results);
+        setData(data);
         console.log(response.results);
       } catch (error) {
         console.error(error.message);
       }
     };
     fetchData();
-  }, []);
+  }, [data]);
 
   return (
     <div className="center">
@@ -43,28 +44,25 @@ const Link = () => {
 
       <span style={{ color: "white", marginTop: "30px" }}>Get your link!</span>
       <div className="Link-box">
-        {data.map((item, objectId) => (
-          <Box
-            key={objectId}
-            style={{ marginTop: "50px" }}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              "& > :not(style)": { m: 1 },
-            }}
-          >
-            <span style={{ fontWeight: "bold" }}>
-              Link: <br></br>{" "}
-            </span>{" "}
-            <TextField
-              value={item.link}
-              style={{ width: "500px" }}
-              id="demo-helper-text-misaligned-no-helper"
-              label="Title"
-            />
-            <ContentCopyIcon />{" "}
-          </Box>
-        ))}
+        <Box
+          style={{ marginTop: "50px" }}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            "& > :not(style)": { m: 1 },
+          }}
+        >
+          <span style={{ fontWeight: "bold" }}>
+            Link: <br></br>{" "}
+          </span>{" "}
+          <TextField
+            value={objectId}
+            style={{ width: "500px" }}
+            id="demo-helper-text-misaligned-no-helper"
+            label="Title"
+          />
+          <ContentCopyIcon />{" "}
+        </Box>
       </div>
     </div>
   );

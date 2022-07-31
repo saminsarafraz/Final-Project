@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import HeaderLogo from "./HeaderLogo";
 import axios from "axios";
+import { BASE_URL } from "./constants";
 const Edit = () => {
   // const [data, setData] = useState([]);
   const [title, setTitle] = useState();
@@ -12,21 +13,18 @@ const Edit = () => {
   const getData = (objectId) => {
     const token = localStorage.getItem("Token");
     axios
-      .get(`https://parseapi.back4app.com/Poll/classes/${objectId}`, {
+      .get(`https://${BASE_URL}/classes/Poll${objectId}`, {
         headers: {
           "X-Parse-Application-Id": "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
 
           "X-Parse-REST-API-Key": "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
           "X-Parse-Session-Token": token,
         },
-        params: {
-          title: title,
-        },
       })
       .then((response) => {
         // setData(response);
         setTitle(response.title);
-        console.log(response.title);
+        console.log(response);
       })
       .catch((error) => {
         console.log(error.message);
@@ -40,7 +38,7 @@ const Edit = () => {
   const editData = (objectId) => {
     const token = localStorage.getItem("Token");
     axios
-      .update(`https://parseapi.back4app.com/classes/Poll/${objectId}`, {
+      .update(`https://${BASE_URL}/classes/Poll/${objectId}`, {
         headers: {
           "X-Parse-Application-Id": "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
 

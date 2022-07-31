@@ -7,50 +7,92 @@ import TextField from "@mui/material/TextField";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "./constants";
 
 const CreatePoll = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  // const [option, setOption] = useState("");
-  const [createOption, setCreateOption] = useState([]);
+  const [options, setOptions] = useState([]);
+  const [createOption, setCreateOption] = useState([{}, {}]);
   const [link, setLink] = useState("");
+  const [error, setError] = useState("");
+
   const createLink = (objectId) => {
     return `http://localhost:3000/Poll${objectId}`;
   };
 
   const token = localStorage.getItem("Token");
   const Create = async () => {
-    try {
-      const { data: response } = await axios.post(
-        "https://parseapi.back4app.com/classes/poll",
+    if (title.length === 0) {
+      setError(true);
+    } else {
+      try {
+        const { data: response } = await axios.post(
+          `https://${BASE_URL}/classes/poll`,
 
-        {
-          title: title,
-          des: description,
-          link: link,
-        },
-        {
-          headers: {
-            "X-Parse-Application-Id":
-              "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
-
-            "X-Parse-REST-API-Key": "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
-
-            "Content-Type": "application/json",
-
-            "X-Parse-Session-Token": token,
+          {
+            title: title,
+            des: description,
           },
-        }
-      );
+          {
+            headers: {
+              "X-Parse-Application-Id":
+                "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
 
-      console.log(response);
-      const id = response.data.objectId;
-      const uniqueLink = createLink(id);
-      setLink(uniqueLink);
-    } catch (err) {
-      console.log(err.message);
+              "X-Parse-REST-API-Key":
+                "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
+
+              "Content-Type": "application/json",
+
+              "X-Parse-Session-Token": token,
+            },
+          }
+        );
+
+        console.log(response);
+        const id = response.objectId;
+        const uniqueLink = createLink(id);
+        setLink(uniqueLink);
+      } catch (err) {
+        console.log(err.message);
+        setError(err.message);
+      }
     }
   };
+
+  //   for (let index = 0; index < options.length; index++) {
+  //     const option = options[index];
+
+  //     axios
+  //       .post(
+  //         `https://${BASE_URL}/classes/option/${option.objectId}`,
+
+  //         {
+  //           option: options.name,
+  //         },
+  //         {
+  //           headers: {
+  //             "X-Parse-Application-Id":
+  //               "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
+
+  //             "X-Parse-REST-API-Key":
+  //               "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
+
+  //             "Content-Type": "application/json",
+
+  //             "X-Parse-Session-Token": token,
+  //           },
+  //         }
+  //       )
+  //       .then((response) => {
+  //         console.log(response);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err.message);
+  //       });
+  //   }
+  // };
 
   const newInput = () => {
     setCreateOption([
@@ -66,7 +108,11 @@ const CreatePoll = () => {
     newOption.splice(i, 1);
     setCreateOption(newOption);
   };
-
+  let navigate = useNavigate();
+  const routeChange = (objectId) => {
+    let path = `/Link/${objectId}`;
+    navigate(path);
+  };
   return (
     <div className="center">
       <HeaderLogo />
@@ -80,9 +126,6 @@ const CreatePoll = () => {
             "& > :not(style)": { m: 1 },
           }}
         >
-          {/* <span>
-            Title: <br></br>{" "}
-          </span>{" "} */}
           <TextField
             onChange={(e) => setTitle(e.target.value)}
             style={{ width: "500px" }}
@@ -90,9 +133,12 @@ const CreatePoll = () => {
             label="Title"
           />
         </Box>
-
+        {error && title.length <= 0 ? (
+          <span style={{ color: "red" }}>title cant be emty</span>
+        ) : (
+          ""
+        )}
         <Box style={{ marginLeft: "196px", marginTop: "30px" }}>
-          {/* <span>Description: </span>{" "} */}
           <TextField
             onChange={(e) => setDescription(e.target.value)}
             style={{ width: "500px" }}
@@ -102,40 +148,10 @@ const CreatePoll = () => {
             rows={4}
           />
         </Box>
-        <Box
-          style={{ marginLeft: "190px", marginTop: "30px" }}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            "& > :not(style)": { m: 1 },
-          }}
-        >
-          <TextField
-            // onChange={(e) => setOption(e.target.value)}
-            style={{ width: "500px" }}
-            id="demo-helper-text-misaligned-no-helper"
-            label="option"
-          />
-          <DeleteForeverIcon onClick={DeletInput} />
-        </Box>
-        <Box
-          style={{ marginLeft: "190px", marginTop: "30px" }}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            "& > :not(style)": { m: 1 },
-          }}
-        >
-          <TextField
-            // onChange={(e) => setOption(e.target.value)}
-            style={{ width: "500px" }}
-            id="demo-helper-text-misaligned-no-helper"
-            label="option"
-          />
-          <DeleteForeverIcon onClick={DeletInput} />
-        </Box>
-        {createOption.map((index) => (
+
+        {createOption.map((index, objectId) => (
           <Box
+            key={objectId}
             style={{ marginLeft: "190px", marginTop: "30px" }}
             sx={{
               display: "flex",
@@ -144,7 +160,7 @@ const CreatePoll = () => {
             }}
           >
             <TextField
-              // onChange={(e) => setOption(e.target.value)}
+              onChange={(e) => setOptions(e.target.value)}
               style={{ width: "500px" }}
               id="demo-helper-text-misaligned-no-helper"
               label="option"
@@ -160,7 +176,10 @@ const CreatePoll = () => {
 
         <div className="center">
           <Button
-            onClick={() => Create()}
+            onClick={() => {
+              Create();
+              routeChange();
+            }}
             style={{
               width: "500px",
               marginTop: "40px",

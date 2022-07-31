@@ -58,6 +58,7 @@ body {
     margin-top: 90px;
     display: flex;
     flex-direction: row;
+  
 
 
 
@@ -170,9 +171,13 @@ body {
     .footer {
         display: flex;
         width: 100%;
+        position: fixed;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-left: 115px;
+    
+    }
+    .header-design{
+        width: 100%;
     }
 }

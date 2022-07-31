@@ -12,6 +12,7 @@ import Paper from "@mui/material/Paper";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "./constants";
 
 const Poll = () => {
   const [data, setData] = useState([]);
@@ -22,7 +23,7 @@ const Poll = () => {
     const fetchData = async () => {
       try {
         const { data: response } = await axios.get(
-          "https://parseapi.back4app.com/classes/poll",
+          `https://${BASE_URL}/classes/poll`,
 
           {
             headers: {
@@ -47,7 +48,7 @@ const Poll = () => {
   const deletePoll = (objectId, e) => {
     const token = localStorage.getItem("Token");
     axios
-      .delete(`https://parseapi.back4app.com/classes/poll/${objectId}`, {
+      .delete(`https://${BASE_URL}/classes/poll/${objectId}`, {
         headers: {
           "X-Parse-Application-Id": "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
 
@@ -89,7 +90,7 @@ const Poll = () => {
               <TableRow>
                 <TableCell align="left">Title</TableCell>
                 <TableCell align="center">Link</TableCell>
-                <TableCell align="right">Num Of Participant</TableCell>
+                <TableCell align="right">Num of Participant</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -99,15 +100,18 @@ const Poll = () => {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell align="left">{row.title}</TableCell>
-                  <TableCell align="right">{row.des}</TableCell>
-                  <TableCell align="right">{row.link}</TableCell>
+                  <TableCell align="right">
+                    {" "}
+                    http://localhost3000/poll/{row.objectId}
+                  </TableCell>
+                  <TableCell align="right"></TableCell>
                   <TableCell align="right">
                     <DeleteForeverIcon
                       onClick={(e) => deletePoll(row.objectId)}
                     />
                   </TableCell>
                   <TableCell align="right">
-                    <EditIcon onClick={() => routeChange(objectId)} />
+                    <EditIcon onClick={() => routeChange(row.objectId)} />
                   </TableCell>
                 </TableRow>
               ))}

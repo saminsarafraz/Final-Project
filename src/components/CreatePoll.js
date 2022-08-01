@@ -18,8 +18,9 @@ const CreatePoll = () => {
   const [link, setLink] = useState("");
   const [error, setError] = useState("");
 
+  const navigate = useNavigate();
   const createLink = (objectId) => {
-    return `http://localhost:3000/Poll${objectId}`;
+    return `/Link/${objectId}`;
   };
 
   const token = localStorage.getItem("Token");
@@ -54,6 +55,7 @@ const CreatePoll = () => {
         const id = response.objectId;
         const uniqueLink = createLink(id);
         setLink(uniqueLink);
+        navigate(uniqueLink);
       } catch (err) {
         console.log(err.message);
         setError(err.message);
@@ -61,38 +63,45 @@ const CreatePoll = () => {
     }
   };
 
-  //   for (let index = 0; index < options.length; index++) {
-  //     const option = options[index];
+  const saveOptions = (e, objectId) => {
+    const data = options;
+    data[objectId] = e.target.value;
+    setOptions(data);
+  };
 
-  //     axios
-  //       .post(
-  //         `https://${BASE_URL}/classes/option/${option.objectId}`,
+  const postoption = () => {
+    for (let index = 0; index < options.length; index++) {
+      const option = options[index];
+      axios
+        .post(
+          `https://${BASE_URL}/classes/option`,
 
-  //         {
-  //           option: options.name,
-  //         },
-  //         {
-  //           headers: {
-  //             "X-Parse-Application-Id":
-  //               "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
+          {
+            option: option,
+          },
+          {
+            headers: {
+              "X-Parse-Application-Id":
+                "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
 
-  //             "X-Parse-REST-API-Key":
-  //               "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
+              "X-Parse-REST-API-Key":
+                "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
 
-  //             "Content-Type": "application/json",
+              "Content-Type": "application/json",
 
-  //             "X-Parse-Session-Token": token,
-  //           },
-  //         }
-  //       )
-  //       .then((response) => {
-  //         console.log(response);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err.message);
-  //       });
-  //   }
-  // };
+              "X-Parse-Session-Token": token,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          console.log("create");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   const newInput = () => {
     setCreateOption([
@@ -108,11 +117,12 @@ const CreatePoll = () => {
     newOption.splice(i, 1);
     setCreateOption(newOption);
   };
-  let navigate = useNavigate();
-  const routeChange = (objectId) => {
-    let path = `/Link/${objectId}`;
-    navigate(path);
-  };
+
+  // const routeChange = (objectId) => {
+  //   let path = `/Link/${objectId}`;
+  //   navigate(path);
+  // };
+
   return (
     <div className="center">
       <HeaderLogo />
@@ -134,7 +144,9 @@ const CreatePoll = () => {
           />
         </Box>
         {error && title.length <= 0 ? (
-          <span style={{ color: "red" }}>title cant be emty</span>
+          <span className="center" style={{ color: "red", TextField: "red" }}>
+            title cant be emty
+          </span>
         ) : (
           ""
         )}
@@ -160,7 +172,7 @@ const CreatePoll = () => {
             }}
           >
             <TextField
-              onChange={(e) => setOptions(e.target.value)}
+              onChange={(e) => saveOptions(e, objectId)}
               style={{ width: "500px" }}
               id="demo-helper-text-misaligned-no-helper"
               label="option"
@@ -178,7 +190,7 @@ const CreatePoll = () => {
           <Button
             onClick={() => {
               Create();
-              routeChange();
+              postoption();
             }}
             style={{
               width: "500px",

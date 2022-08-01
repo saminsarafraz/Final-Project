@@ -17,9 +17,10 @@ import { BASE_URL } from "./constants";
 const Poll = () => {
   const [data, setData] = useState([]);
   const [Delete, setDelete] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("Token");
+    setIsLoading(true);
     const fetchData = async () => {
       try {
         const { data: response } = await axios.get(
@@ -42,11 +43,13 @@ const Poll = () => {
         console.error(error.message);
       }
     };
+    setIsLoading(false);
     fetchData();
   }, []);
 
   const deletePoll = (objectId, e) => {
     const token = localStorage.getItem("Token");
+    setIsLoading(true);
     axios
       .delete(`https://${BASE_URL}/classes/poll/${objectId}`, {
         headers: {
@@ -68,6 +71,7 @@ const Poll = () => {
       .catch((error) => {
         console.log(error.message);
       });
+    setIsLoading(false);
   };
 
   let navigate = useNavigate();
@@ -79,6 +83,12 @@ const Poll = () => {
   return (
     <div className="center">
       <HeaderCreate />
+
+      {isLoading ? (
+        <p style={{ color: "white", marginTop: "30px" }}>Loading ...</p>
+      ) : (
+        ""
+      )}
 
       <span style={{ color: "white", marginTop: "30px" }}>
         Build your poll!

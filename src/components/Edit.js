@@ -6,27 +6,28 @@ import Button from "@mui/material/Button";
 import HeaderLogo from "./HeaderLogo";
 import axios from "axios";
 import { BASE_URL } from "./constants";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Edit = () => {
-  const [title, setTitle] = useState([]);
-
+  const [title, setTitle] = useState("");
+  const [description, setDiscription] = useState("");
+  const navigate = useNavigate();
+  let { objectId } = useParams();
   const getData = (objectId) => {
     const token = localStorage.getItem("Token");
     axios
-      .get(`https://${BASE_URL}/Poll/${objectId}`, {
+      .get(`https://${BASE_URL}/classes/poll/${objectId}`, {
         headers: {
           "X-Parse-Application-Id": "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
 
           "X-Parse-REST-API-Key": "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
-          "X-Parse-Revocable-Session": "1",
+
           "X-Parse-Session-Token": token,
-        },
-        params: {
-          title: title,
         },
       })
       .then((response) => {
-        // setData(response);
-        setTitle(response);
+        setTitle(response.data.title);
+        setDiscription(response.data.des);
         console.log(response);
       })
       .catch((error) => {
@@ -35,23 +36,35 @@ const Edit = () => {
   };
 
   useEffect(() => {
-    getData();
-  });
+    getData(objectId);
+  }, []);
 
-  const editData = (objectId) => {
+  const editData = () => {
     const token = localStorage.getItem("Token");
-    axios
-      .update(`https://${BASE_URL}/classes/Poll/${objectId}`, {
-        headers: {
-          "X-Parse-Application-Id": "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
 
-          "X-Parse-REST-API-Key": "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
-          "X-Parse-Session-Token": token,
-          "content-type": "application/json",
+    axios
+      .put(
+        `https://${BASE_URL}/classes/poll/${objectId}`,
+
+        {
+          title: title,
+          des: description,
         },
-      })
+
+        {
+          headers: {
+            "X-Parse-Application-Id":
+              "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
+
+            "X-Parse-REST-API-Key": "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
+            "X-Parse-Session-Token": token,
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((response) => {
         console.log(response.data);
+        navigate("/poll");
       })
       .catch((error) => {
         console.log(error.message);
@@ -74,6 +87,7 @@ const Edit = () => {
           }}
         >
           <TextField
+            onChange={(e) => setTitle(e.target.value)}
             value={title}
             style={{ width: "500px" }}
             id="demo-helper-text-misaligned-no-helper"
@@ -83,6 +97,8 @@ const Edit = () => {
         {/* ))} */}
         <Box style={{ marginLeft: "196px", marginTop: "30px" }}>
           <TextField
+            value={description}
+            onChange={(e) => setDiscription(e.target.value)}
             style={{ width: "500px" }}
             id="outlined-multiline-static"
             label="Description"

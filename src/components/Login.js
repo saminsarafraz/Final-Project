@@ -16,11 +16,13 @@ const Sign = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const login = () => {
     if (username.length === 0 || password.length === 0) {
       setError(true);
+      setIsLoading(true);
     } else {
       axios
         .get(`https://${BASE_URL}/login`, {
@@ -47,6 +49,7 @@ const Sign = () => {
           setError("your username or pass are not correct ");
         });
     }
+    setIsLoading(false);
   };
 
   return (
@@ -54,6 +57,11 @@ const Sign = () => {
       <div className="center ">
         {" "}
         <HeaderBack> </HeaderBack>
+        {isLoading ? (
+          <p style={{ color: "white", marginTop: "30px" }}>Loading ...</p>
+        ) : (
+          ""
+        )}
         <div>
           {" "}
           <p className="p-color">Login please!</p>

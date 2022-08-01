@@ -7,23 +7,26 @@ import HeaderLogo from "./HeaderLogo";
 import axios from "axios";
 import { BASE_URL } from "./constants";
 const Edit = () => {
-  // const [data, setData] = useState([]);
-  const [title, setTitle] = useState();
+  const [title, setTitle] = useState([]);
 
   const getData = (objectId) => {
     const token = localStorage.getItem("Token");
     axios
-      .get(`https://${BASE_URL}/classes/Poll${objectId}`, {
+      .get(`https://${BASE_URL}/Poll/${objectId}`, {
         headers: {
           "X-Parse-Application-Id": "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
 
           "X-Parse-REST-API-Key": "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
+          "X-Parse-Revocable-Session": "1",
           "X-Parse-Session-Token": token,
+        },
+        params: {
+          title: title,
         },
       })
       .then((response) => {
         // setData(response);
-        setTitle(response.title);
+        setTitle(response);
         console.log(response);
       })
       .catch((error) => {
@@ -48,7 +51,7 @@ const Edit = () => {
         },
       })
       .then((response) => {
-        console.log(response.results);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error.message);

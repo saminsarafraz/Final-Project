@@ -9,15 +9,16 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { BASE_URL } from "./constants";
 
 const Link = () => {
-  const [data, setData] = useState([]);
+  const [link, setLink] = useState([]);
+
   let { objectId } = useParams();
   useEffect(() => {
     const token = localStorage.getItem("Token");
+
     const fetchData = async (objectId) => {
       try {
         const { data: response } = await axios.get(
           `https://${BASE_URL}/classes/poll/${objectId}`,
-
           {
             headers: {
               "X-Parse-Application-Id":
@@ -27,16 +28,17 @@ const Link = () => {
                 "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
               "X-Parse-Session-Token": token,
             },
+            params: { link: link },
           }
         );
-        setData(data);
+        setLink(Link);
         console.log(response.results);
       } catch (error) {
         console.error(error.message);
       }
     };
     fetchData();
-  }, [data]);
+  }, [link]);
 
   return (
     <div className="center">
@@ -61,7 +63,12 @@ const Link = () => {
             id="demo-helper-text-misaligned-no-helper"
             label="Title"
           />
-          <ContentCopyIcon />{" "}
+          <ContentCopyIcon
+            onClick={() => {
+              navigator.clipboard.writeText(TextField.value);
+              alert("copied");
+            }}
+          />{" "}
         </Box>
       </div>
     </div>

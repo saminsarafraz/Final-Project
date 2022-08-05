@@ -22,6 +22,9 @@ const CreatePoll = () => {
   const createLink = (objectId) => {
     return `/Link/${objectId}`;
   };
+  const createPollPage = (objectId) => {
+    return `/poll/http://localhost:3000/${objectId}`;
+  };
 
   const token = localStorage.getItem("Token");
   const Create = async () => {
@@ -53,9 +56,11 @@ const CreatePoll = () => {
 
         console.log(response);
         const id = response.objectId;
+        postoption(id);
         const uniqueLink = createLink(id);
         setLink(uniqueLink);
         navigate(uniqueLink);
+        createPollPage(id);
       } catch (err) {
         console.log(err.message);
         setError(err.message);
@@ -69,7 +74,7 @@ const CreatePoll = () => {
     setOptions(data);
   };
 
-  const postoption = () => {
+  const postoption = (id) => {
     for (let index = 0; index < options.length; index++) {
       const option = options[index];
       axios
@@ -78,6 +83,7 @@ const CreatePoll = () => {
 
           {
             option: option,
+            pollId: id,
           },
           {
             headers: {
@@ -144,7 +150,7 @@ const CreatePoll = () => {
           />
         </Box>
         {error && title.length <= 0 ? (
-          <span className="center" style={{ color: "red", TextField: "red" }}>
+          <span className="center" style={{ color: "red" }}>
             title cant be emty
           </span>
         ) : (
@@ -190,7 +196,6 @@ const CreatePoll = () => {
           <Button
             onClick={() => {
               Create();
-              postoption();
             }}
             style={{
               width: "500px",

@@ -20,7 +20,7 @@ const App = () => {
         <Route path="/Edit/:objectId" element={<Edit />}></Route>
 
         <Route path="/Link/:objectId" element={<Link />}></Route>
-        <Route path="/poll/:pollId" element={<PollPage />}></Route>
+        <Route path="/poll/:objectId" element={<PollPage />}></Route>
       </Routes>
     </Router>
   );

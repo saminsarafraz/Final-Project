@@ -25,14 +25,14 @@ const PollPage = () => {
 
   const [participantChoice, setParticipantChoice] = useState([]);
 
-  let { pollId } = useParams();
+  let { objectId } = useParams();
   useEffect(() => {
     const token = localStorage.getItem("Token");
     setIsLoading(true);
-    const fetchData = async () => {
+    const fetchData = async (objectId) => {
       try {
         const { data: response } = await axios.get(
-          `https://${BASE_URL}/classes/option`,
+          `https://${BASE_URL}/classes/option${objectId}`,
 
           {
             headers: {
@@ -46,14 +46,15 @@ const PollPage = () => {
           }
         );
         setOptions(response.results);
-        console.log(response.option);
+
+        console.log(response.results);
       } catch (error) {
         console.error(error.message);
       }
     };
     setIsLoading(false);
-    fetchData();
-  }, []);
+    fetchData(objectId);
+  }, [objectId]);
 
   const sendParticipantData = () => {
     axios
@@ -79,6 +80,7 @@ const PollPage = () => {
       .then((response) => {
         console.log(response);
         const id = response.objectId;
+
         sendChoice(id);
 
         console.log("create");
@@ -176,7 +178,6 @@ const PollPage = () => {
   //   fetchData();
   // }, []);
 
-  console.log(participants);
   return (
     <div>
       <span style={{ color: "white", marginTop: "30px" }}>
@@ -187,10 +188,10 @@ const PollPage = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                {options.map((column, pollId) => (
+                {options.map((column, objectId) => (
                   <TableCell
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    key={pollId}
+                    key={objectId}
                     align="right"
                   >
                     {column.option}
@@ -234,7 +235,6 @@ const PollPage = () => {
         onClick={() => {
           sendParticipantData();
           sendChoice();
-          // sendChoice();
         }}
       >
         submit

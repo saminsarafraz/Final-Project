@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import "../Poll.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useParams } from "react-router-dom";
 import HeaderBack from "./HeaderBack";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import copy from "copy-to-clipboard";
 
 const Link = () => {
   let { objectId } = useParams();
-  const handleClick = () => navigator.clipboard.writeText(window.location);
+
+  const [copyText, setCopyText] = useState(
+    `http://localhost:3000/poll/${objectId}`
+  );
+
+  const handleCopyText = (e) => {
+    setCopyText(e.target.value);
+  };
+
+  const copyToClipboard = () => {
+    copy(copyText);
+    alert(`You have copied "${copyText}"`);
+  };
+
   return (
     <div className="center">
       <HeaderBack />
@@ -24,14 +38,15 @@ const Link = () => {
           }}
         >
           <TextField
-            value={`http://localhost:3000/poll/${objectId}`}
+            onChange={handleCopyText}
+            value={copyText}
             style={{ width: "500px" }}
             id="demo-helper-text-misaligned-no-helper"
             label="Link"
           />
           <ContentCopyIcon
             onClick={() => {
-              handleClick();
+              copyToClipboard();
               alert("copied");
             }}
           />{" "}

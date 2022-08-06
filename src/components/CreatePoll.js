@@ -23,7 +23,7 @@ const CreatePoll = () => {
     return `/Link/${objectId}`;
   };
   const createPollPage = (objectId) => {
-    return `/poll/http://localhost:3000/${objectId}`;
+    return `/poll/${objectId}`;
   };
 
   const token = localStorage.getItem("Token");

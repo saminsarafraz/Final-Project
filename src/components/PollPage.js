@@ -12,6 +12,8 @@ import Paper from "@mui/material/Paper";
 import Cells from "./Cells";
 import Checkbox from "@mui/material/Checkbox";
 
+import Button from "@mui/material/Button";
+
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const PollPage = () => {
@@ -29,10 +31,10 @@ const PollPage = () => {
   useEffect(() => {
     const token = localStorage.getItem("Token");
     setIsLoading(true);
-    const fetchData = async (objectId) => {
+    const fetchData = async () => {
       try {
         const { data: response } = await axios.get(
-          `https://${BASE_URL}/classes/option${objectId}`,
+          `https://${BASE_URL}/classes/option`,
 
           {
             headers: {
@@ -53,8 +55,8 @@ const PollPage = () => {
       }
     };
     setIsLoading(false);
-    fetchData(objectId);
-  }, [objectId]);
+    fetchData();
+  }, []);
 
   const sendParticipantData = () => {
     axios
@@ -179,20 +181,42 @@ const PollPage = () => {
   // }, []);
 
   return (
-    <div>
-      <span style={{ color: "white", marginTop: "30px" }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        padding: "30px",
+      }}
+    >
+      <span style={{ color: "white", paddingTop: "50px" }}>
         Vote in Poll please!
       </span>
-      <div className="big-box">
+      <div style={{ marginTop: "80px" }} className="big-box">
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
+                <tableCell>
+                  {" "}
+                  <input
+                    style={{
+                      width: "100px",
+                      height: "20px",
+                      backgroundColor: "black",
+                      color: "white",
+                      marginTop: "20px",
+                      marginLeft: "17px",
+                    }}
+                    value="fullname"
+                  />{" "}
+                </tableCell>
                 {options.map((column, objectId) => (
                   <TableCell
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     key={objectId}
-                    align="right"
+                    align="left"
                   >
                     {column.option}
                   </TableCell>
@@ -230,7 +254,12 @@ const PollPage = () => {
           </Table>
         </TableContainer>
       </div>
-      <button
+      <Button
+        style={{
+          marginTop: "80px",
+          width: "200px",
+          backgroundColor: "lightgray",
+        }}
         type="submit"
         onClick={() => {
           sendParticipantData();
@@ -238,7 +267,7 @@ const PollPage = () => {
         }}
       >
         submit
-      </button>
+      </Button>
     </div>
   );
 };

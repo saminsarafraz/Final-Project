@@ -42,7 +42,7 @@ const Cells = ({ participant }) => {
     <>
       <tabaleCell>{`${participant.first_name}  ${participant.last_name}`}</tabaleCell>
       {options.map(() => (
-        <TableCell align="left">
+        <TableCell style={{ marginLeft: "70px" }}>
           {" "}
           <Checkbox />{" "}
         </TableCell>

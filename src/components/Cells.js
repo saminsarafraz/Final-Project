@@ -12,37 +12,43 @@ const Cells = ({ participant }) => {
   useEffect(() => {
     const token = localStorage.getItem("Token");
     setIsLoading(true);
-    const fetchData = async (participantChoice) => {
-      try {
-        const { data: response } = await axios.get(
-          `https://${BASE_URL}/classes/participantChoice/${participantChoice.objectId}`,
 
-          {
-            headers: {
-              "X-Parse-Application-Id":
-                "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
+    const fetchData = async (participant) => {
+      if (participant && participant.objectId) {
+        console.log("if");
+        try {
+          const { data: response } = await axios.get(
+            `https://${BASE_URL}/classes/participantChoice/${participant.objectId}`,
 
-              "X-Parse-REST-API-Key":
-                "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
-              "X-Parse-Session-Token": token,
-            },
-          }
-        );
-        setParticipantChoice(response.results);
-        console.log(response.results);
-      } catch (error) {
-        console.error(error.message);
+            {
+              headers: {
+                "X-Parse-Application-Id":
+                  "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
+
+                "X-Parse-REST-API-Key":
+                  "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
+                "X-Parse-Session-Token": token,
+              },
+            }
+          );
+          setParticipantChoice(response.results);
+          console.log("cells", response);
+          setOptions(response);
+        } catch (error) {
+          console.error(error.message);
+        }
       }
     };
+
     setIsLoading(false);
-    fetchData(participantChoice);
+    fetchData(participant);
   }, []);
 
   return (
     <>
-      <tabaleCell>{`${participant.first_name}  ${participant.last_name}`}</tabaleCell>
-      {options.map(() => (
-        <TableCell style={{ marginLeft: "70px" }}>
+      <TableCell>{`${participant ? participant.fullName : ""} `}</TableCell>
+      {options.map((option) => (
+        <TableCell>
           {" "}
           <Checkbox />{" "}
         </TableCell>

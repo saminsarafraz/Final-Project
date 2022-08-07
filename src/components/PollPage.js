@@ -22,19 +22,18 @@ const PollPage = () => {
   const [options, setOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [fullname, setFullname] = useState("");
-
   const [participants, setParticipans] = useState([]);
-
   const [participantChoice, setParticipantChoice] = useState([]);
 
-  let { objectId } = useParams();
+  let { pollId } = useParams();
   useEffect(() => {
+    const array = [];
     const token = localStorage.getItem("Token");
     setIsLoading(true);
-    const fetchData = async () => {
+    const fetchData = async (pollId) => {
       try {
         const { data: response } = await axios.get(
-          `https://${BASE_URL}/classes/option`,
+          `https://${BASE_URL}/classes/poll/${pollId}`,
 
           {
             headers: {
@@ -47,15 +46,39 @@ const PollPage = () => {
             },
           }
         );
-        setOptions(response.results);
+        console.log(response.optionsId);
 
-        console.log(response.results);
+        const optionsId = response.optionsId;
+        for (let index = 0; index < optionsId.length; index++) {
+          const option = optionsId[index];
+
+          const { data: response } = await axios.get(
+            `https://${BASE_URL}/classes/option/${option}`,
+
+            {
+              headers: {
+                "X-Parse-Application-Id":
+                  "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
+
+                "X-Parse-REST-API-Key":
+                  "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
+                "X-Parse-Session-Token": token,
+              },
+            }
+          );
+
+          array.push(response);
+        }
+
+        setOptions(array);
+
+        console.log(array);
       } catch (error) {
         console.error(error.message);
       }
     };
     setIsLoading(false);
-    fetchData();
+    fetchData(pollId);
   }, []);
 
   const sendParticipantData = () => {
@@ -83,7 +106,7 @@ const PollPage = () => {
         console.log(response);
         const id = response.objectId;
 
-        sendChoice(id);
+        // sendChoice(id);
 
         console.log("create");
       })
@@ -92,14 +115,13 @@ const PollPage = () => {
       });
   };
 
-  const sendChoice = (id) => {
+  const sendChoice = () => {
     axios
       .post(
         `https://${BASE_URL}/classes/participantChoice`,
 
         {
-          participantId: id,
-          // optionId: options,
+          optionId: participantChoice,
         },
         {
           headers: {
@@ -115,70 +137,86 @@ const PollPage = () => {
         }
       )
       .then((response) => {
-        console.log(response);
+        console.log("postOption", response);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("Token");
-  //   setIsLoading(true);
-  //   const fetchData = async () => {
-  //     try {
-  //       const { data: response } = await axios.get(
-  //         `https://${BASE_URL}/classes/participantChoise`,
+  const handleCheckbox = (e, objectId) => {
+    const choice = participantChoice.find((c) => c.objectId === objectId);
+    if (!choice) {
+      setParticipantChoice((prev) =>
+        prev.concat({ objectId, value: e.target.checked })
+      );
+    }
+    if (choice) {
+      const choiceIndex = participantChoice.findIndex(
+        (c) => c.objectId === objectId
+      );
+      participantChoice[choiceIndex] = { objectId, value: e.target.checked };
+      setParticipantChoice(participantChoice);
+    }
+  };
 
-  //         {
-  //           headers: {
-  //             "X-Parse-Application-Id":
-  //               "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
+  useEffect(() => {
+    const token = localStorage.getItem("Token");
+    setIsLoading(true);
+    const fetchData = async () => {
+      try {
+        const { data: response } = await axios.get(
+          `https://${BASE_URL}/classes/participantChoice`,
 
-  //             "X-Parse-REST-API-Key":
-  //               "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
-  //             "X-Parse-Session-Token": token,
-  //           },
-  //         }
-  //       );
-  //       setParticipantChoice(response.results);
-  //       console.log(response.results);
-  //     } catch (error) {
-  //       console.error(error.message);
-  //     }
-  //   };
-  //   setIsLoading(false);
-  //   fetchData();
-  // }, []);
+          {
+            headers: {
+              "X-Parse-Application-Id":
+                "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("Token");
-  //   setIsLoading(true);
-  //   const fetchData = async () => {
-  //     try {
-  //       const { data: response } = await axios.get(
-  //         `https://${BASE_URL}/classes/participant`,
+              "X-Parse-REST-API-Key":
+                "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
+              "X-Parse-Session-Token": token,
+            },
+          }
+        );
+        setParticipantChoice(response);
+        console.log(response);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    setIsLoading(false);
+    fetchData();
+  }, []);
 
-  //         {
-  //           headers: {
-  //             "X-Parse-Application-Id":
-  //               "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
+  useEffect(() => {
+    const token = localStorage.getItem("Token");
+    setIsLoading(true);
+    const fetchData = async () => {
+      try {
+        const { data: response } = await axios.get(
+          `https://${BASE_URL}/classes/participant`,
 
-  //             "X-Parse-REST-API-Key":
-  //               "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
-  //             "X-Parse-Session-Token": token,
-  //           },
-  //         }
-  //       );
-  //       setParticipans(response.results);
-  //       console.log(response.results);
-  //     } catch (error) {
-  //       console.error(error.message);
-  //     }
-  //   };
-  //   setIsLoading(false);
-  //   fetchData();
-  // }, []);
+          {
+            headers: {
+              "X-Parse-Application-Id":
+                "f931V7Wy2RrIE9b1TO0LfEyKE7Sxmiz3xNbvZY0y",
+
+              "X-Parse-REST-API-Key":
+                "ymLai1cLTm8N1u3DWTwUQHx1nzAD7BKikHSINpgg",
+              "X-Parse-Session-Token": token,
+            },
+          }
+        );
+        setParticipans(response.results);
+        console.log("name", response.results);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    setIsLoading(false);
+    fetchData();
+  }, []);
 
   return (
     <div
@@ -198,7 +236,7 @@ const PollPage = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <tableCell>
+                <TableCell>
                   {" "}
                   <input
                     style={{
@@ -209,9 +247,9 @@ const PollPage = () => {
                       marginTop: "20px",
                       marginLeft: "17px",
                     }}
-                    value="fullname"
+                    value=" Enter Fullname"
                   />{" "}
-                </tableCell>
+                </TableCell>
                 {options.map((column, objectId) => (
                   <TableCell
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -243,7 +281,10 @@ const PollPage = () => {
 
                 {options.map((option) => (
                   <TableCell key={option.objectId}>
-                    <Checkbox style={{ marginRight: "70px" }} />
+                    <Checkbox
+                      onChange={(e) => handleCheckbox(e, option.objectId)}
+                      style={{ marginRight: "70px" }}
+                    />
                   </TableCell>
                 ))}
               </TableRow>

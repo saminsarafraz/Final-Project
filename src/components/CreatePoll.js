@@ -32,12 +32,14 @@ const CreatePoll = () => {
       setError(true);
     } else {
       try {
+        const array = await postoption();
         const { data: response } = await axios.post(
           `https://${BASE_URL}/classes/poll`,
 
           {
             title: title,
             des: description,
+            optionsId: array,
           },
           {
             headers: {
@@ -55,8 +57,8 @@ const CreatePoll = () => {
         );
 
         console.log(response);
+
         const id = response.objectId;
-        postoption(id);
         const uniqueLink = createLink(id);
         setLink(uniqueLink);
         navigate(uniqueLink);
@@ -74,16 +76,16 @@ const CreatePoll = () => {
     setOptions(data);
   };
 
-  const postoption = (id) => {
+  const postoption = async () => {
+    const array = [];
     for (let index = 0; index < options.length; index++) {
       const option = options[index];
-      axios
-        .post(
+      try {
+        const { data: response } = await axios.post(
           `https://${BASE_URL}/classes/option`,
 
           {
             option: option,
-            pollId: id,
           },
           {
             headers: {
@@ -98,15 +100,14 @@ const CreatePoll = () => {
               "X-Parse-Session-Token": token,
             },
           }
-        )
-        .then((response) => {
-          console.log(response);
-          console.log("create");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        );
+        console.log(response);
+        array.push(response.objectId);
+      } catch (err) {
+        console.log(err);
+      }
     }
+    return array;
   };
 
   const newInput = () => {

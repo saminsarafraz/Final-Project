@@ -14,11 +14,11 @@ const Cells = ({ participant }) => {
     setIsLoading(true);
 
     const fetchData = async (participant) => {
-      if (participant && participant.objectId) {
+      if (participant) {
         console.log("if");
         try {
           const { data: response } = await axios.get(
-            `https://${BASE_URL}/classes/participantChoice/${participant.objectId}`,
+            `https://${BASE_URL}/classes/participantChoice`,
 
             {
               headers: {

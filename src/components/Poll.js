@@ -90,7 +90,7 @@ const Poll = () => {
         ""
       )}
 
-      <span style={{ color: "white", marginTop: "30px" }}>
+      <span style={{ color: "white", marginTop: "30px", fontSize: "22px" }}>
         Build your poll!
       </span>
       <div className="big-box">

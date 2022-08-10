@@ -133,7 +133,9 @@ const CreatePoll = () => {
   return (
     <div className="center">
       <HeaderLogo />
-      <span style={{ color: "white", marginTop: "30px" }}>Create poll !</span>
+      <span style={{ color: "white", marginTop: "30px", fontSize: "22px" }}>
+        Create poll !
+      </span>
       <div className="big-box ">
         <Box
           style={{ marginLeft: "190px", marginTop: "30px" }}

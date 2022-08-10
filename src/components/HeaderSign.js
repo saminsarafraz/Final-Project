@@ -11,7 +11,7 @@ const HeaderSign = () => {
       <img className="logo-design" src={image} alt="logo"></img>
       <div className="header-button">
         <Button
-          style={{ width: "100px", color: "black", backgroundColor: "grey" }}
+          style={{ width: "100px", backgroundColor: "#cc2b5e" }}
           variant="contained"
           disableElevation
         >

@@ -27,7 +27,9 @@ const Link = () => {
     <div className="center">
       <HeaderBack />
 
-      <span style={{ color: "white", marginTop: "60px" }}>Get your link!</span>
+      <span style={{ color: "white", marginTop: "60px", fontSize: "22px" }}>
+        Get your link!
+      </span>
       <div className="Link-box">
         <Box
           style={{ marginTop: "60px", marginLeft: "30px" }}

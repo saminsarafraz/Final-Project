@@ -1,6 +1,6 @@
 .big-box {
     width: 900px;
-    background-color: lightgray;
+ background-color: white;
     margin-top: 40px;
 
 }
@@ -19,7 +19,7 @@
 .Link-box {
     width: 600px;
     height: 200px;
-    background-color: lightgrey;
+   background-color: white;
     margin-top: 8%;
     display: flex;
     flex-direction: column;

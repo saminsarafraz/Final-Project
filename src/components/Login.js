@@ -55,19 +55,17 @@ const Sign = () => {
   return (
     <div>
       <div className="center ">
-        {" "}
         <HeaderBack> </HeaderBack>
         {isLoading ? (
           <p style={{ color: "white", marginTop: "30px" }}>Loading ...</p>
         ) : (
           ""
         )}
-        <div>
-          {" "}
-          <p className="p-color">Login please!</p>
-        </div>
-        <div className="box">
-          <div className="center margin-top">
+        <div className="box margin-top ">
+          <div className="center ">
+            <div>
+              <p className="p-color">Login please!</p>
+            </div>
             <Box
               sx={{
                 display: "flex",
@@ -84,7 +82,7 @@ const Sign = () => {
               />
             </Box>
             {error && username.length <= 0 ? (
-              <span style={{ color: "red" }}>userName cant be emty</span>
+              <span style={{ color: "red" }}>username cant be emty</span>
             ) : (
               ""
             )}

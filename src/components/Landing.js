@@ -13,10 +13,16 @@ const Landing = () => {
     <div>
       <HeaderSign />
       <div className="center">
-        <span style={{ color: "white", paddingTop: "80px" }} className="center">
+        <span
+          style={{
+            color: "white",
+            paddingTop: "80px",
+            fontSize: "22px",
+          }}
+        >
           Welcome to our site!
         </span>
-        <div className="big-box">
+        <div style={{ backgroundColor: "white" }} className="big-box">
           <div className="row">
             <div className="text first-text">
               <span className="bold">Create your desired survey!</span>
